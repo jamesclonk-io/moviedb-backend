@@ -5,7 +5,7 @@ applications:
   disk_quota: 64M
   instances: 1
   buildpack: https://github.com/cloudfoundry/buildpack-go.git
-  host: backend.moviedb
+  host: moviedb-backend
   domains:
   - jamesclonk.com
   - jamesclonk.io
