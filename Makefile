@@ -6,3 +6,6 @@ all: moviedb-backend
 
 moviedb-backend: main.go
 	GOARCH=amd64 GOOS=linux go build -o moviedb-backend
+
+test:
+	GOARCH=amd64 GOOS=linux go test -v ./...
