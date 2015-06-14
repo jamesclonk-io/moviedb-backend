@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/JamesClonk/vcap"
@@ -22,7 +25,6 @@ var (
 
 func init() {
 	log = logger.GetLogger()
-	databaseSetup()
 }
 
 func databaseSetup() {
@@ -64,11 +66,18 @@ func databaseSetup() {
 	mdb = moviedb.NewMovieDB(db)
 }
 
-func main() {
+func setup() *negroni.Negroni {
+	// setup database
+	databaseSetup()
+
 	backend := web.NewBackend()
 
 	// setup API routes
-	backend.NewRoute("/movie/{id}", getMovie)
+	backend.NewRoute("/movie", postMovie).Methods("POST")
+	backend.NewRoute("/movie/{id}", putMovie).Methods("PUT")
+	backend.NewRoute("/movie/{id}", deleteMovie).Methods("DELETE")
+	backend.NewRoute("/movie/{id}", getMovie).Methods("GET")
+
 	backend.NewRoute("/movies", getMovies)
 	backend.NewRoute("/languages", getLanguages)
 	backend.NewRoute("/genres", getGenres)
@@ -77,17 +86,55 @@ func main() {
 	backend.NewRoute("/datecount", getDateCount)
 	backend.NewRoute("/statistics", getStatistics)
 
+	backend.NewRoute("/500", createError)
+
 	n := negroni.Sbagliato()
 	n.UseHandler(backend.Router)
 
+	return n
+}
+
+func main() {
+	// setup http handler
+	n := setup()
+
+	// start backend server
 	server := web.NewServer()
 	server.Start(n)
 }
 
-func getMovie(w http.ResponseWriter, req *http.Request) *web.Page {
-	vars := mux.Vars(req)
-	id := vars["id"]
+func postMovie(w http.ResponseWriter, req *http.Request) *web.Page {
+	decoder := json.NewDecoder(req.Body)
+	var movie moviedb.Movie
+	if err := decoder.Decode(&movie); err != nil {
+		return web.Error("Error", http.StatusInternalServerError, err)
+	}
+	if err := mdb.AddMovie(&movie); err != nil {
+		return web.Error("Error", http.StatusInternalServerError, err)
+	}
+	return &web.Page{
+		Content: map[string]string{"Result": "OK"},
+	}
+}
 
+func putMovie(w http.ResponseWriter, req *http.Request) *web.Page {
+	return web.Error("Error", http.StatusNotImplemented, errors.New("Not implemented"))
+}
+
+func deleteMovie(w http.ResponseWriter, req *http.Request) *web.Page {
+	id := mux.Vars(req)["id"]
+	rows, err := mdb.DeleteMovie(id)
+	if err != nil {
+		log.Error(err)
+		return web.Error("Error", http.StatusInternalServerError, err)
+	}
+	return &web.Page{
+		Content: map[string]interface{}{"RowsDeleted": rows},
+	}
+}
+
+func getMovie(w http.ResponseWriter, req *http.Request) *web.Page {
+	id := mux.Vars(req)["id"]
 	data, err := mdb.GetMovie(id)
 	return getData(data, err)
 }
@@ -135,4 +182,8 @@ func getData(data interface{}, err error) *web.Page {
 	return &web.Page{
 		Content: data,
 	}
+}
+
+func createError(w http.ResponseWriter, req *http.Request) *web.Page {
+	return web.Error("Error", http.StatusInternalServerError, fmt.Errorf("Error!"))
 }

@@ -29,15 +29,15 @@
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/env",
-			"Rev": "da97b179ec6e30dc914af17e198576559112313f"
+			"Rev": "7576272ba6763194635dfcba2b77a6260da3f1ed"
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/logger",
-			"Rev": "da97b179ec6e30dc914af17e198576559112313f"
+			"Rev": "7576272ba6763194635dfcba2b77a6260da3f1ed"
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/web",
-			"Rev": "da97b179ec6e30dc914af17e198576559112313f"
+			"Rev": "7576272ba6763194635dfcba2b77a6260da3f1ed"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
@@ -51,6 +51,10 @@
 		{
 			"ImportPath": "github.com/phyber/negroni-gzip/gzip",
 			"Rev": "48f82605778a579cb8172122897f589e4023b537"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "dab07ac62d4905d3e48d17dc549c684ac3b7c15a"
 		},
 		{
 			"ImportPath": "github.com/tylerb/graceful",

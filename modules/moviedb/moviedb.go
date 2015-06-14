@@ -876,54 +876,53 @@ func (mdb *movieDB) GetMovieListings(opt ...MovieListingOptions) ([]*MovieListin
 	}
 
 	sql := `select mm.id, mm.title, mm.year, mm.score, mm.rating from movie_movie mm `
-	var params []interface{}         // all bind variables in here
-	var andParams []interface{}      // only bind variables for "and %s = ?" clauses
-	andSql := "where 1 = $1 "        // always add "where 1 = ?" first
-	andParams = append(andParams, 1) // first bind variable for "where 1 = ?"
+	var params []interface{} // all bind variables in here
 	paramCounter := 1
 
 	if len(options.Query) > 0 {
 		for _, query := range options.Query {
-			paramCounter += 1
 			switch {
 			case query.Query() == "language":
 				sql += fmt.Sprintf("join movie_link_language mll on (mll.movie_id = mm.id and mll.language_id = $%d) ", paramCounter)
 				params = append(params, query.Value())
+				paramCounter += 1
 			case query.Query() == "genre":
 				sql += fmt.Sprintf("join movie_link_genre mlg on (mlg.movie_id = mm.id and mlg.genre_id = $%d) ", paramCounter)
 				params = append(params, query.Value())
+				paramCounter += 1
 			case query.Query() == "actor":
 				sql += fmt.Sprintf("join movie_link_actor mla on (mla.movie_id = mm.id and mla.person_id = $%d) ", paramCounter)
 				params = append(params, query.Value())
+				paramCounter += 1
 			case query.Query() == "director":
 				sql += fmt.Sprintf("join movie_link_director mld on (mld.movie_id = mm.id and mld.person_id = $%d) ", paramCounter)
 				params = append(params, query.Value())
-			default:
-				// "and %s = ?" clauses
-				switch {
-				case query.Query() == "char" && query.Value() == "num":
-					andSql += "and substr(title,1,1) in ('1','2','3','4','5','6','7','8','9','0') "
-				case query.Query() == "char":
-					andSql += fmt.Sprintf("and upper(substr(title,1,1)) = upper($%d) ", paramCounter)
-					andParams = append(andParams, query.Value())
-				case query.Query() == "search":
-					andSql += fmt.Sprintf("and (title like $%d or alttitle like $%d or description like $%d) ",
-						paramCounter, paramCounter+1, paramCounter+2)
-					paramCounter += 2
-					andParams = append(andParams, fmt.Sprintf("%%%s%%", query.Value()))
-					andParams = append(andParams, fmt.Sprintf("%%%s%%", query.Value()))
-					andParams = append(andParams, fmt.Sprintf("%%%s%%", query.Value()))
-				default:
-					andSql += fmt.Sprintf("and %s = $%d ", query.Query(), paramCounter)
-					andParams = append(andParams, query.Value())
-				}
+				paramCounter += 1
 			}
 		}
-		for _, param := range andParams {
-			// add "and %s = ?" bind variables
-			params = append(params, param)
+		sql += "where 1 = 1 "
+		for _, query := range options.Query {
+			switch {
+			case query.Query() == "char" && query.Value() == "num":
+				sql += "and substr(title,1,1) in ('1','2','3','4','5','6','7','8','9','0') "
+			case query.Query() == "char":
+				sql += fmt.Sprintf("and upper(substr(title,1,1)) = upper($%d) ", paramCounter)
+				params = append(params, query.Value())
+				paramCounter += 1
+			case query.Query() == "search":
+				sql += fmt.Sprintf("and (title like $%d or alttitle like $%d or description like $%d) ",
+					paramCounter, paramCounter, paramCounter)
+				params = append(params, fmt.Sprintf("%%%s%%", query.Value()))
+				paramCounter += 1
+			case query.Query() != "language" &&
+				query.Query() != "genre" &&
+				query.Query() != "actor" &&
+				query.Query() != "director":
+				sql += fmt.Sprintf("and %s = $%d ", query.Query(), paramCounter)
+				params = append(params, query.Value())
+				paramCounter += 1
+			}
 		}
-		sql += andSql // add "and %s = ?" clauses
 	}
 
 	if len(options.Sort) > 0 {
@@ -949,6 +948,10 @@ func (mdb *movieDB) GetMovieListings(opt ...MovieListingOptions) ([]*MovieListin
 		return nil, err
 	}
 	defer rows.Close()
+
+	if rows.Err() != nil {
+		return nil, err
+	}
 
 	ms := []*MovieListing{}
 	for rows.Next() {

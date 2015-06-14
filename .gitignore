@@ -27,3 +27,6 @@ _testmain.go
 backend
 moviedb-backend
 *.zip
+_fixtures/test_copy.db
+_fixtures/test_copy.db*
+
