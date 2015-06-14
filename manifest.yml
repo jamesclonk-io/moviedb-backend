@@ -13,3 +13,6 @@ applications:
   path: .
   env:
     JCIO_ENV: production
+    JCIO_DATABASE_TYPE: postgres
+  services:
+   - moviedb

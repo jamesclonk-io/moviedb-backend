@@ -29,7 +29,7 @@ func databaseSetup() {
 	var databaseType, databaseUri string
 
 	// get db type
-	databaseType = env.Get("DATABASE_TYPE", "postgres")
+	databaseType = env.Get("JCIO_DATABASE_TYPE", "postgres")
 
 	// check for VCAP_SERVICES first
 	data, err := vcap.New()
@@ -42,9 +42,9 @@ func databaseSetup() {
 		}
 	}
 
-	// if DATABASE_URL is not yet set then try to read it from ENV
+	// if JCIO_DATABASE_URL is not yet set then try to read it from ENV
 	if len(databaseUri) == 0 {
-		databaseUri = env.MustGet("DATABASE_URI")
+		databaseUri = env.MustGet("JCIO_DATABASE_URI")
 	}
 
 	// setup database adapter
