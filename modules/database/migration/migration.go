@@ -1,6 +1,8 @@
 package migration
 
 import (
+	"fmt"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/jamesclonk-io/stdlib/logger"
 	"github.com/mattes/migrate/migrate"
@@ -14,8 +16,8 @@ func init() {
 	log = logger.GetLogger()
 }
 
-func RunMigrations(uri string) {
-	errors, ok := migrate.UpSync(uri, "./migrations")
+func RunMigrations(dbUri, dbType string) {
+	errors, ok := migrate.UpSync(dbUri, fmt.Sprintf("./migrations/%s", dbType))
 	if !ok {
 		for _, err := range errors {
 			log.Error(err)

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -33,7 +34,7 @@ func init() {
 	logger.GetLogger().Out = ioutil.Discard
 
 	os.Setenv("JCIO_DATABASE_TYPE", "sqlite")
-	os.Setenv("JCIO_DATABASE_URI", movieTestDbFileCopy)
+	os.Setenv("JCIO_DATABASE_URI", fmt.Sprintf("sqlite3://%s", movieTestDbFileCopy))
 	os.Setenv("JCIO_HTTP_CERT_FILE", "_fixtures/test.cert")
 	os.Setenv("JCIO_HTTP_KEY_FILE", "_fixtures/test.key")
 	os.Setenv("JCIO_HTTP_AUTH_USER", testUser)

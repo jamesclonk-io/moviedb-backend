@@ -62,7 +62,7 @@ func NewAdapter() (db *Adapter) {
 	}
 
 	// run db migrations
-	migration.RunMigrations(databaseUri)
+	migration.RunMigrations(databaseUri, databaseType)
 
 	return db
 }
