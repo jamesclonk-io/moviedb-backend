@@ -1,5 +1,5 @@
 -- movie_link_actor
-CREATE TABLE `movie_link_actor` (
+CREATE TABLE IF NOT EXISTS `movie_link_actor` (
 	`movie_id`			integer NOT NULL,
 	`person_id`			integer NOT NULL,
 	FOREIGN KEY(`movie_id`) REFERENCES [movie_movie] ( [id] ) ON DELETE CASCADE,
@@ -7,7 +7,7 @@ CREATE TABLE `movie_link_actor` (
 );
 
 -- movie_link_director
-CREATE TABLE `movie_link_director` (
+CREATE TABLE IF NOT EXISTS `movie_link_director` (
 	`movie_id`			integer NOT NULL,
 	`person_id`			integer NOT NULL,
 	FOREIGN KEY(`movie_id`) REFERENCES [movie_movie] ( [id] ) ON DELETE CASCADE,
@@ -15,7 +15,7 @@ CREATE TABLE `movie_link_director` (
 );
 
 -- movie_link_genre
-CREATE TABLE `movie_link_genre` (
+CREATE TABLE IF NOT EXISTS `movie_link_genre` (
 	`movie_id`			integer NOT NULL,
 	`genre_id`			integer NOT NULL,
 	FOREIGN KEY(`movie_id`) REFERENCES [movie_movie] ( [id] ) ON DELETE CASCADE,
@@ -23,7 +23,7 @@ CREATE TABLE `movie_link_genre` (
 );
 
 -- movie_link_language
-CREATE TABLE `movie_link_language` (
+CREATE TABLE IF NOT EXISTS `movie_link_language` (
 	`movie_id`			integer NOT NULL,
 	`language_id`		integer NOT NULL,
 	FOREIGN KEY(`movie_id`) REFERENCES [movie_movie] ( [id] ) ON DELETE CASCADE,
