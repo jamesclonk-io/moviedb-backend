@@ -47,15 +47,15 @@
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/env",
-			"Rev": "b5df8392a6f40d117715fe534ce542ad3e4acb75"
+			"Rev": "d31bbaf15499964b6fb2a9b888218a752ca446e3"
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/logger",
-			"Rev": "b5df8392a6f40d117715fe534ce542ad3e4acb75"
+			"Rev": "d31bbaf15499964b6fb2a9b888218a752ca446e3"
 		},
 		{
 			"ImportPath": "github.com/jamesclonk-io/stdlib/web",
-			"Rev": "b5df8392a6f40d117715fe534ce542ad3e4acb75"
+			"Rev": "d31bbaf15499964b6fb2a9b888218a752ca446e3"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

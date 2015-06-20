@@ -32,10 +32,10 @@ func setup() *negroni.Negroni {
 	backend := web.NewBackend()
 
 	// setup API routes on backend
-	backend.NewRoute("/movie", postMovie).Methods("POST")
-	backend.NewRoute("/movie/{id}", putMovie).Methods("PUT")
-	backend.NewRoute("/movie/{id}", deleteMovie).Methods("DELETE")
 	backend.NewRoute("/movie/{id}", getMovie).Methods("GET")
+	backend.NewSecuredRoute("/movie", postMovie).Methods("POST")
+	backend.NewSecuredRoute("/movie/{id}", putMovie).Methods("PUT")
+	backend.NewSecuredRoute("/movie/{id}", deleteMovie).Methods("DELETE")
 
 	backend.NewRoute("/movies", getMovies)
 	backend.NewRoute("/languages", getLanguages)

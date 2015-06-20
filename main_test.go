@@ -71,7 +71,6 @@ func Test_Main_404(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusNotFound, response.Code)
@@ -86,7 +85,6 @@ func Test_Main_500(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusInternalServerError, response.Code)
@@ -101,7 +99,6 @@ func Test_Main_GetMovie(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -110,6 +107,16 @@ func Test_Main_GetMovie(t *testing.T) {
 	assert.Contains(t, body, `"id":914,"title":"Argo"`)
 	assert.Contains(t, body, `"genres":[{"id":27,"name":"Biography"},{"id":6,"name":"Drama"},{"id":28,"name":"History"},{"id":4,"name":"Thriller"}]`)
 	assert.Equal(t, `{"id":914,"title":"Argo","alttitle":{"String":"","Valid":true},"year":2012,"description":"Acting under the cover of a Hollywood producer scouting a location for a science fiction film, a CIA agent launches a dangerous operation to rescue six Americans in Tehran during the U.S. hostage crisis in Iran in 1980.","format":"16:9","length":129,"region":"B","rating":12,"disks":1,"score":5,"picture":"argo.jpg","type":"BluRay","languages":[{"id":1,"name":"Deutsch","country":"Schweiz","native_name":"Deutsch"},{"id":2,"name":"Englisch","country":"USA","native_name":"English"},{"id":3,"name":"Franz\u0026#246;sisch","country":"Frankreich","native_name":"Fran\u0026#231;ais"},{"id":4,"name":"Spanisch","country":"Spanien","native_name":"Espa\u0026#241;ol"}],"genres":[{"id":27,"name":"Biography"},{"id":6,"name":"Drama"},{"id":28,"name":"History"},{"id":4,"name":"Thriller"}],"actors":[{"id":5310,"name":"Alan Arkin"},{"id":331,"name":"Ben Affleck"},{"id":5321,"name":"Bill Tangradi"},{"id":3665,"name":"Bob Gunton"},{"id":3470,"name":"Bryan Cranston"},{"id":4139,"name":"Chris Messina"},{"id":2490,"name":"Christopher Denham"},{"id":5325,"name":"Christopher Stanley"},{"id":40,"name":"Clea DuVall"},{"id":5317,"name":"Farshad Farahat"},{"id":5322,"name":"Jamie McShane"},{"id":942,"name":"John Goodman"},{"id":5319,"name":"Karina Logue"},{"id":5313,"name":"Keith Szarabajka"},{"id":3232,"name":"Kyle Chandler"},{"id":5323,"name":"Matthew Glave"},{"id":5316,"name":"Omid Abtahi"},{"id":4776,"name":"Page Leong"},{"id":5315,"name":"Richard Dillane"},{"id":5314,"name":"Richard Kind"},{"id":5324,"name":"Roberto Garcia"},{"id":5312,"name":"Rory Cochrane"},{"id":5320,"name":"Ryan Ahern"},{"id":1859,"name":"Scoot McNairy"},{"id":5318,"name":"Sheila Vand"},{"id":5311,"name":"Tate Donovan"},{"id":1590,"name":"Titus Welliver"},{"id":3122,"name":"Victor Garber"},{"id":1326,"name":"Zeljko Ivanek"}],"directors":[{"id":331,"name":"Ben Affleck"}]}`, body)
+
+	response = httptest.NewRecorder()
+	req, err = http.NewRequest("POST", "https://localhost:4008/movie", nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	m.ServeHTTP(response, req)
+	assert.Equal(t, http.StatusUnauthorized, response.Code)
+	assert.Contains(t, response.Body.String(), `"Unauthorized!"`)
 
 	response = httptest.NewRecorder()
 	req, err = http.NewRequest("POST", "https://localhost:4008/movie", nil)
@@ -152,6 +159,16 @@ func Test_Main_DeleteMovie(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	m.ServeHTTP(response, req)
+	assert.Equal(t, http.StatusUnauthorized, response.Code)
+	assert.Contains(t, response.Body.String(), `"Unauthorized!"`)
+
+	response = httptest.NewRecorder()
+	req, err = http.NewRequest("DELETE", "https://localhost:4008/movie/7", nil)
+	if err != nil {
+		t.Error(err)
+	}
 	req.SetBasicAuth("wrong!", "wrong!")
 
 	m.ServeHTTP(response, req)
@@ -178,7 +195,6 @@ func Test_Main_DeleteMovie(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusInternalServerError, response.Code)
@@ -193,18 +209,16 @@ func Test_Main_AddMovie(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusInternalServerError, response.Code)
 
-	// first with wrong auth
+	// first with missing auth
 	response = httptest.NewRecorder()
 	req, err = http.NewRequest("POST", "https://localhost:4008/movie", nil)
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth("wrong!", "wrong!")
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusUnauthorized, response.Code)
@@ -267,7 +281,6 @@ func Test_Main_AddMovie(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -285,7 +298,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -300,7 +312,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -313,7 +324,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -326,7 +336,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -339,7 +348,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -352,7 +360,6 @@ func Test_Main_Movies(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -367,7 +374,6 @@ func Test_Main_Languages(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -383,7 +389,6 @@ func Test_Main_Genres(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -399,7 +404,6 @@ func Test_Main_Actors(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -416,7 +420,6 @@ func Test_Main_Directors(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -433,7 +436,6 @@ func Test_Main_Dates(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
@@ -448,7 +450,6 @@ func Test_Main_Statistics(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	req.SetBasicAuth(testUser, testPassword)
 
 	m.ServeHTTP(response, req)
 	assert.Equal(t, http.StatusOK, response.Code)
