@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/JamesClonk/vcap"
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"github.com/jamesclonk-io/moviedb-backend/modules/database"
 	"github.com/jamesclonk-io/moviedb-backend/modules/moviedb"
-	"github.com/jamesclonk-io/stdlib/env"
 	"github.com/jamesclonk-io/stdlib/logger"
 	"github.com/jamesclonk-io/stdlib/web"
 	"github.com/jamesclonk-io/stdlib/web/negroni"
@@ -19,7 +17,6 @@ import (
 
 var (
 	log *logrus.Logger
-	db  *database.Adapter
 	mdb moviedb.MovieDB
 )
 
@@ -27,52 +24,14 @@ func init() {
 	log = logger.GetLogger()
 }
 
-func databaseSetup() {
-	var databaseType, databaseUri string
-
-	// get db type
-	databaseType = env.Get("JCIO_DATABASE_TYPE", "postgres")
-
-	// check for VCAP_SERVICES first
-	data, err := vcap.New()
-	if err != nil {
-		panic(err)
-	}
-	if service := data.GetService("moviedb"); service != nil {
-		if uri, ok := service.Credentials["uri"]; ok {
-			databaseUri = uri.(string)
-		}
-	}
-
-	// if JCIO_DATABASE_URL is not yet set then try to read it from ENV
-	if len(databaseUri) == 0 {
-		databaseUri = env.MustGet("JCIO_DATABASE_URI")
-	}
-
-	// setup database adapter
-	switch databaseType {
-	case "postgres":
-		db = database.NewPostgresAdapter(databaseUri)
-	case "sqlite":
-		db = database.NewSQLiteAdapter(databaseUri)
-	default:
-		log.Fatalf("Invalid database type: %s\n", databaseType)
-	}
-
-	// panic if no database adapter was set up
-	if db == nil {
-		panic("Could not set up database adapter")
-	}
-	mdb = moviedb.NewMovieDB(db)
-}
-
 func setup() *negroni.Negroni {
-	// setup database
-	databaseSetup()
+	// setup movie database
+	mdb = moviedb.NewMovieDB(database.NewAdapter())
 
+	// create backend service
 	backend := web.NewBackend()
 
-	// setup API routes
+	// setup API routes on backend
 	backend.NewRoute("/movie", postMovie).Methods("POST")
 	backend.NewRoute("/movie/{id}", putMovie).Methods("PUT")
 	backend.NewRoute("/movie/{id}", deleteMovie).Methods("DELETE")

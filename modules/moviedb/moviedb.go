@@ -28,11 +28,11 @@ type MovieDB interface {
 }
 
 type movieDB struct {
-	*database.Adapter
+	*sql.DB
 }
 
 func NewMovieDB(adapter *database.Adapter) MovieDB {
-	return &movieDB{adapter}
+	return &movieDB{adapter.Database}
 }
 
 func (mdb *movieDB) GetLanguagesByMovie(id string) ([]*Language, error) {

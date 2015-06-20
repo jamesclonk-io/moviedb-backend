@@ -3,6 +3,7 @@
 .gitmodules
 .gitignore
 .goplayrc
+.postgres_dev.sh
 .travis.yml
 Makefile
 Dockerfile
