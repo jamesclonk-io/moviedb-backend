@@ -398,6 +398,20 @@ func Test_Main_Genres(t *testing.T) {
 	assert.Contains(t, body, `{"id":15,"name":"War"},{"id":10,"name":"Western"}`)
 }
 
+func Test_Main_GetPerson(t *testing.T) {
+	response := httptest.NewRecorder()
+	req, err := http.NewRequest("GET", "https://localhost:4008/person/470", nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	m.ServeHTTP(response, req)
+	assert.Equal(t, http.StatusOK, response.Code)
+
+	body := response.Body.String()
+	assert.Equal(t, `{"id":470,"name":"Roger Moore"}`, body)
+}
+
 func Test_Main_Actors(t *testing.T) {
 	response := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "https://localhost:4008/actors", nil)

@@ -21,6 +21,7 @@ type MovieDB interface {
 	GetDirectorsByMovie(id string) ([]*Person, error)
 	GetLanguages() ([]*Language, error)
 	GetGenres() ([]*Genre, error)
+	GetPerson(id string) (*Person, error)
 	GetActors() ([]*Person, error)
 	GetDirectors() ([]*Person, error)
 	GetDateCount() (*DateCount, error)
@@ -183,6 +184,20 @@ func (mdb *movieDB) GetGenres() ([]*Genre, error) {
 		gs = append(gs, &g)
 	}
 	return gs, nil
+}
+
+func (mdb *movieDB) GetPerson(id string) (*Person, error) {
+	stmt, err := mdb.Prepare(`select id, name from movie_people where id = $1`)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	p := &Person{}
+	if err := stmt.QueryRow(id).Scan(&p.Id, &p.Name); err != nil {
+		return nil, err
+	}
+	return p, nil
 }
 
 func (mdb *movieDB) GetActors() ([]*Person, error) {

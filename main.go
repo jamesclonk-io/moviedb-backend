@@ -40,6 +40,7 @@ func setup() *negroni.Negroni {
 	backend.NewRoute("/movies", getMovies)
 	backend.NewRoute("/languages", getLanguages)
 	backend.NewRoute("/genres", getGenres)
+	backend.NewRoute("/person/{id}", getPerson)
 	backend.NewRoute("/actors", getActors)
 	backend.NewRoute("/directors", getDirectors)
 	backend.NewRoute("/datecount", getDateCount)
@@ -110,6 +111,12 @@ func getLanguages(w http.ResponseWriter, req *http.Request) *web.Page {
 
 func getGenres(w http.ResponseWriter, req *http.Request) *web.Page {
 	data, err := mdb.GetGenres()
+	return getData(data, err)
+}
+
+func getPerson(w http.ResponseWriter, req *http.Request) *web.Page {
+	id := mux.Vars(req)["id"]
+	data, err := mdb.GetPerson(id)
 	return getData(data, err)
 }
 
