@@ -29,10 +29,11 @@ type MovieDB interface {
 
 type movieDB struct {
 	*sql.DB
+	DatabaseType string
 }
 
 func NewMovieDB(adapter *database.Adapter) MovieDB {
-	return &movieDB{adapter.Database}
+	return &movieDB{adapter.Database, adapter.Type}
 }
 
 func (mdb *movieDB) GetLanguagesByMovie(id string) ([]*Language, error) {
@@ -910,8 +911,13 @@ func (mdb *movieDB) GetMovieListings(opt ...MovieListingOptions) ([]*MovieListin
 				params = append(params, query.Value())
 				paramCounter += 1
 			case query.Query() == "search":
-				sql += fmt.Sprintf("and (title like $%d or alttitle like $%d or description like $%d) ",
-					paramCounter, paramCounter, paramCounter)
+				if mdb.DatabaseType == "postgres" {
+					sql += fmt.Sprintf("and (title ilike $%d or alttitle ilike $%d or description ilike $%d) ",
+						paramCounter, paramCounter, paramCounter)
+				} else {
+					sql += fmt.Sprintf("and (title like $%d or alttitle like $%d or description like $%d) ",
+						paramCounter, paramCounter, paramCounter)
+				}
 				params = append(params, fmt.Sprintf("%%%s%%", query.Value()))
 				paramCounter += 1
 			case query.Query() != "language" &&

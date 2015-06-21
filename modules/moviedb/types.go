@@ -150,7 +150,9 @@ func (s *sort) Order() string {
 func (s *sort) SetOrderBy(field string, order string) {
 	switch {
 	case field == "title" || field == "year" ||
-		field == "score" || field == "rating":
+		field == "score" || field == "rating" ||
+		field == "format" || field == "disk_region" ||
+		field == "length" || field == "disks" || field == "disk_type":
 		s.field = field
 	default:
 		s.field = "id"
@@ -194,8 +196,9 @@ func (q *query) SetQuery(query string, value string) {
 		query == "score" || query == "rating" ||
 		query == "disk_region" || query == "disk_type" ||
 		query == "language" || query == "genre" ||
+		query == "format" || query == "disks" ||
 		query == "char" || query == "search" ||
-		query == "actor" || query == "director":
+		query == "actor" || query == "director" || query == "length":
 		q.query = query
 	default:
 		q.query = "id"
