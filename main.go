@@ -9,6 +9,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"github.com/jamesclonk-io/moviedb-backend/modules/database"
+	"github.com/jamesclonk-io/moviedb-backend/modules/database/migration"
 	"github.com/jamesclonk-io/moviedb-backend/modules/moviedb"
 	"github.com/jamesclonk-io/stdlib/logger"
 	"github.com/jamesclonk-io/stdlib/web"
@@ -26,7 +27,9 @@ func init() {
 
 func setup() *negroni.Negroni {
 	// setup movie database
-	mdb = moviedb.NewMovieDB(database.NewAdapter())
+	adapter := database.NewAdapter()
+	migration.RunMigrations("./migrations", adapter)
+	mdb = moviedb.NewMovieDB(adapter)
 
 	// create backend service
 	backend := web.NewBackend()

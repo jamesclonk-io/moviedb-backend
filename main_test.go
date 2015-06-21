@@ -152,6 +152,7 @@ func Test_Main_GetMovie(t *testing.T) {
 
 func Test_Main_DeleteMovie(t *testing.T) {
 	copyFile(movieTestDbFile, movieTestDbFileCopy)
+	defer copyFile(movieTestDbFile, movieTestDbFileCopy)
 
 	// first with wrong auth
 	response := httptest.NewRecorder()
@@ -202,6 +203,7 @@ func Test_Main_DeleteMovie(t *testing.T) {
 
 func Test_Main_AddMovie(t *testing.T) {
 	copyFile(movieTestDbFile, movieTestDbFileCopy)
+	defer copyFile(movieTestDbFile, movieTestDbFileCopy)
 
 	// is it not there yet?
 	response := httptest.NewRecorder()
