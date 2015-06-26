@@ -909,37 +909,30 @@ func Test_MovieDB_Directors(t *testing.T) {
 	}
 }
 
-func Test_MovieDB_DateCount(t *testing.T) {
+func Test_MovieDB_Statistics(t *testing.T) {
 	mdb := getMovieDB()
 	defer mdb.Close()
 
-	dt, err := mdb.GetDateCount()
+	// dates
+	stats, err := mdb.GetStatistics()
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, 912, dt.Count)
+	assert.Equal(t, 912, stats.Count)
 
 	gz, err := time.Parse(time.UnixDate, "Sun Aug 01 00:13:37 UTC 1999")
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, gz, dt.GroundZero)
+	assert.Equal(t, gz, stats.GroundZero)
 
 	lu, err := time.Parse(time.UnixDate, "Wed Jan 01 17:11:36 UTC 2014")
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, lu, dt.LastUpdate)
-}
+	assert.Equal(t, lu, stats.LastUpdate)
 
-func Test_MovieDB_Statistics(t *testing.T) {
-	mdb := getMovieDB()
-	defer mdb.Close()
-
-	stats, err := mdb.GetStatistics()
-	if err != nil {
-		t.Fatal(err)
-	}
+	// stats
 	assert.Equal(t, 2, len(stats.Movies))
 	assert.Equal(t, "DVD", stats.Movies[0].DiskType)
 	assert.Equal(t, 1238, stats.Movies[0].Disks)
@@ -976,4 +969,15 @@ func Test_MovieDB_Statistics(t *testing.T) {
 
 	assert.Equal(t, "21", stats.Ratings[0].Type)
 	assert.Equal(t, 132, stats.Ratings[1].Count)
+
+	// numbers
+	assert.True(t, stats.AvgMoviesPerDay > 0.15 && stats.AvgMoviesPerDay < 0.3)
+	assert.True(t, stats.NewMoviesEstimate > 90)
+	assert.Equal(t, 602, stats.DvdMovies)
+	assert.Equal(t, 310, stats.BlurayMovies)
+	assert.Equal(t, 1238, stats.DvdDisks)
+	assert.Equal(t, 493, stats.BlurayDisks)
+	assert.Equal(t, 215944, stats.TotalLength)
+	assert.Equal(t, 236, stats.AvgLengthPerMovie)
+	assert.Equal(t, 124, stats.AvgLengthPerDisk)
 }

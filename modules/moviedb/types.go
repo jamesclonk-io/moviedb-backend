@@ -7,13 +7,10 @@ import (
 	"time"
 )
 
-type DateCount struct {
-	GroundZero time.Time `json:"ground_zero" xml:"ground_zero"`
-	LastUpdate time.Time `json:"last_update" xml:"last_update"`
-	Count      int       `json:"count" xml:"count"`
-}
-
 type Statistics struct {
+	GroundZero            time.Time          `json:"ground_zero" xml:"ground_zero"`
+	LastUpdate            time.Time          `json:"last_update" xml:"last_update"`
+	Count                 int                `json:"count" xml:"count"`
 	Movies                []*MovieType       `json:"movie_types" xml:"movie_types"`
 	Actors                int                `json:"actors" xml:"actors"`
 	Directors             int                `json:"directors" xml:"directors"`
@@ -24,6 +21,15 @@ type Statistics struct {
 	Regions               []*TypeCount       `json:"regions" xml:"regions"`
 	Scores                []*TypeCount       `json:"scores" xml:"scores"`
 	Ratings               []*TypeCount       `json:"ratings" xml:"ratings"`
+	AvgMoviesPerDay       float64
+	NewMoviesEstimate     float64
+	DvdMovies             int
+	BlurayMovies          int
+	DvdDisks              int
+	BlurayDisks           int
+	TotalLength           int
+	AvgLengthPerMovie     int
+	AvgLengthPerDisk      int
 }
 
 type MovieType struct {

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"math"
 	"time"
 
 	"github.com/jamesclonk-io/moviedb-backend/modules/database"
@@ -24,7 +25,6 @@ type MovieDB interface {
 	GetPerson(id string) (*Person, error)
 	GetActors() ([]*Person, error)
 	GetDirectors() ([]*Person, error)
-	GetDateCount() (*DateCount, error)
 	GetStatistics() (*Statistics, error)
 }
 
@@ -238,36 +238,33 @@ func (mdb *movieDB) GetDirectors() ([]*Person, error) {
 	return ps, nil
 }
 
-func (mdb *movieDB) GetDateCount() (*DateCount, error) {
-	rows, err := mdb.Query(`select id, date from movie_dbdate`)
+func (mdb *movieDB) GetStatistics() (*Statistics, error) {
+	stats := Statistics{}
+
+	// -----------------------------------------------------------------
+	// dates & count
+	rows0, err := mdb.Query(`select id, date from movie_dbdate`)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer rows0.Close()
 
-	dt := DateCount{}
-	for rows.Next() {
+	for rows0.Next() {
 		var id int
 		var date time.Time
-		if err := rows.Scan(&id, &date); err != nil {
+		if err := rows0.Scan(&id, &date); err != nil {
 			return nil, err
 		}
 		if id == 1 {
-			dt.GroundZero = date
+			stats.GroundZero = date
 		} else {
-			dt.LastUpdate = date
+			stats.LastUpdate = date
 		}
 	}
 
-	if err := mdb.QueryRow(`select count(*) from movie_movie`).Scan(&dt.Count); err != nil {
+	if err := mdb.QueryRow(`select count(*) from movie_movie`).Scan(&stats.Count); err != nil {
 		return nil, err
 	}
-
-	return &dt, nil
-}
-
-func (mdb *movieDB) GetStatistics() (*Statistics, error) {
-	stats := Statistics{}
 
 	// -----------------------------------------------------------------
 	// general statistics
@@ -410,6 +407,26 @@ func (mdb *movieDB) GetStatistics() (*Statistics, error) {
 		rss = append(rss, &t)
 	}
 	stats.Ratings = rss
+
+	// -----------------------------------------------------------------
+	// numbers
+
+	// calculating avg movies per day and currently estimated total new movies
+	avgMoviesPerDay := (float64(stats.Count) / (stats.LastUpdate.Sub(stats.GroundZero).Hours() / 24))
+	daysSinceLastUpdate := (time.Now().Sub(stats.LastUpdate).Hours() / 24)
+	stats.NewMoviesEstimate = round((daysSinceLastUpdate * avgMoviesPerDay), 1)
+	stats.AvgMoviesPerDay = round(avgMoviesPerDay, 2)
+
+	// calculating runtimes
+	stats.TotalLength = stats.Movies[0].Length + stats.Movies[1].Length
+	stats.AvgLengthPerMovie = int(round(float64(stats.TotalLength/stats.Count), 0))
+	stats.AvgLengthPerDisk = int(round(float64(stats.TotalLength/(stats.Movies[0].Disks+stats.Movies[1].Disks)), 0))
+
+	// counts
+	stats.DvdMovies = stats.Movies[0].Count
+	stats.BlurayMovies = stats.Movies[1].Count
+	stats.DvdDisks = stats.Movies[0].Disks
+	stats.BlurayDisks = stats.Movies[1].Disks
 
 	return &stats, nil
 }
@@ -983,4 +1000,19 @@ func (mdb *movieDB) GetMovieListings(opt ...MovieListingOptions) ([]*MovieListin
 		ms = append(ms, &m)
 	}
 	return ms, nil
+}
+
+func round(val float64, prec int) float64 {
+	var rounder float64
+	pow := math.Pow(10, float64(prec))
+	intermed := val * pow
+
+	if intermed < 0.0 {
+		intermed -= 0.5
+	} else {
+		intermed += 0.5
+	}
+	rounder = float64(int64(intermed))
+
+	return rounder / float64(pow)
 }

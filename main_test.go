@@ -446,20 +446,6 @@ func Test_Main_Directors(t *testing.T) {
 	assert.Contains(t, body, `{"id":417,"name":"John Carpenter"}`)
 }
 
-func Test_Main_Dates(t *testing.T) {
-	response := httptest.NewRecorder()
-	req, err := http.NewRequest("GET", "https://localhost:4008/datecount", nil)
-	if err != nil {
-		t.Error(err)
-	}
-
-	m.ServeHTTP(response, req)
-	assert.Equal(t, http.StatusOK, response.Code)
-
-	body := response.Body.String()
-	assert.Contains(t, body, `{"ground_zero":"1999-08-01T00:13:37Z","last_update":"2014-01-01T17:11:36Z","count":912}`)
-}
-
 func Test_Main_Statistics(t *testing.T) {
 	response := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "https://localhost:4008/statistics", nil)
@@ -471,5 +457,5 @@ func Test_Main_Statistics(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.Code)
 
 	body := response.Body.String()
-	assert.Equal(t, `{"movie_types":[{"type":"DVD","disks":1238,"length":154253,"count":602},{"type":"BluRay","disks":493,"length":61691,"count":310}],"actors":4696,"directors":578,"people_total":5244,"top5_actors":[{"id":483,"name":"Bud Spencer","count":26},{"id":338,"name":"Matt Damon","count":22},{"id":369,"name":"Desmond Llewelyn","count":21},{"id":76,"name":"Cate Blanchett","count":16},{"id":651,"name":"Morgan Freeman","count":16}],"top5_directors":[{"id":493,"name":"Kenji Kamiyama","count":17},{"id":127,"name":"George Lucas","count":11},{"id":70,"name":"Peter Jackson","count":11},{"id":64,"name":"Steven Spielberg","count":11},{"id":121,"name":"Ridley Scott","count":9}],"top5_actors_and_directors":[{"id":396,"name":"Clint Eastwood","count":20},{"id":189,"name":"Mel Gibson","count":14},{"id":220,"name":"George Clooney","count":12},{"id":211,"name":"Quentin Tarantino","count":12},{"id":331,"name":"Ben Affleck","count":11}],"regions":[{"type":"0","count":12},{"type":"1","count":74},{"type":"2","count":514},{"type":"3","count":1},{"type":"B","count":311}],"scores":[{"type":"5","count":92},{"type":"4","count":214},{"type":"3","count":520},{"type":"2","count":81},{"type":"1","count":5}],"ratings":[{"type":"21","count":12},{"type":"18","count":132},{"type":"16","count":397},{"type":"12","count":304},{"type":"6","count":67}]}`, body)
+	assert.Equal(t, `{"ground_zero":"1999-08-01T00:13:37Z","last_update":"2014-01-01T17:11:36Z","count":912,"movie_types":[{"type":"DVD","disks":1238,"length":154253,"count":602},{"type":"BluRay","disks":493,"length":61691,"count":310}],"actors":4696,"directors":578,"people_total":5244,"top5_actors":[{"id":483,"name":"Bud Spencer","count":26},{"id":338,"name":"Matt Damon","count":22},{"id":369,"name":"Desmond Llewelyn","count":21},{"id":76,"name":"Cate Blanchett","count":16},{"id":651,"name":"Morgan Freeman","count":16}],"top5_directors":[{"id":493,"name":"Kenji Kamiyama","count":17},{"id":127,"name":"George Lucas","count":11},{"id":70,"name":"Peter Jackson","count":11},{"id":64,"name":"Steven Spielberg","count":11},{"id":121,"name":"Ridley Scott","count":9}],"top5_actors_and_directors":[{"id":396,"name":"Clint Eastwood","count":20},{"id":189,"name":"Mel Gibson","count":14},{"id":220,"name":"George Clooney","count":12},{"id":211,"name":"Quentin Tarantino","count":12},{"id":331,"name":"Ben Affleck","count":11}],"regions":[{"type":"0","count":12},{"type":"1","count":74},{"type":"2","count":514},{"type":"3","count":1},{"type":"B","count":311}],"scores":[{"type":"5","count":92},{"type":"4","count":214},{"type":"3","count":520},{"type":"2","count":81},{"type":"1","count":5}],"ratings":[{"type":"21","count":12},{"type":"18","count":132},{"type":"16","count":397},{"type":"12","count":304},{"type":"6","count":67}],"AvgMoviesPerDay":0.17,"NewMoviesEstimate":93.7,"DvdMovies":602,"BlurayMovies":310,"DvdDisks":1238,"BlurayDisks":493,"TotalLength":215944,"AvgLengthPerMovie":236,"AvgLengthPerDisk":124}`, body)
 }

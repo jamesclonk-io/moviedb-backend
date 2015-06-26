@@ -46,7 +46,6 @@ func setup() *negroni.Negroni {
 	backend.NewRoute("/person/{id}", getPerson)
 	backend.NewRoute("/actors", getActors)
 	backend.NewRoute("/directors", getDirectors)
-	backend.NewRoute("/datecount", getDateCount)
 	backend.NewRoute("/statistics", getStatistics)
 
 	backend.NewRoute("/500", createError)
@@ -130,11 +129,6 @@ func getActors(w http.ResponseWriter, req *http.Request) *web.Page {
 
 func getDirectors(w http.ResponseWriter, req *http.Request) *web.Page {
 	data, err := mdb.GetDirectors()
-	return getData(data, err)
-}
-
-func getDateCount(w http.ResponseWriter, req *http.Request) *web.Page {
-	data, err := mdb.GetDateCount()
 	return getData(data, err)
 }
 
