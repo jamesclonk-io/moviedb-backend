@@ -12,17 +12,30 @@ env:
     - secure: "ZzSQJCxOI4TPweFnkQjo7ex9GdXSPFNZttdTHAFlt1EzwNxpd/2QefeLWDS9gnZeN569raB+gHDhn8dTD7tKYIvhovWWQ57tMo22ARDC/gweCKICnLHr+h+/YQVhcym1iFRojQlsSP70i0ic0N6Fh5slMoA0Lzv0PN3YwYy8IVKgvJH9QFd/QTw9AapqmlDgcHcwMj48a6gOZ4u3/ySitO0W8DAXf2SB9dKDpvGoNU8OZBk062zl2WNkAFW8gI//qK622JiulA7fSVPgSJqez6fz6rweencIZ9l31EAv3PEFTiMYUmd7TNwicwmah+1zS02JPXC3JL8opvh+lnuS1v4mWeiT32/kCtgHeIpA84nTnELGRXupJk3SdbJzrM4BOsDA+e1csC8nuP/AugpxRU5S1px89dhhvMZUxz/xJ7hivprPD2wXCL+xFPu7/LGzSBBYBvnxOeU1g3FRR1yWnB/6NkKRlR9ppK/Ku2PWrmuEwOKG/gP3I7sARY3giThgojiJ67lpNX8N+M2kcSRLSjZqDey+fmuXWN1EKZlBuKRU1vlg61YZPpqYItY78UfHX9QPOPcqDZi7sRkyb3b2ACM1p01FmNvf1qel6wtIcb+NQXlGxZSW4mAdwzCYpTVw57g9VLNXRxwmD+2yzBP7v/mPbC9gMETJnzw72l6azNE="
     - secure: "sxsw7RAljNssdbuSc6q6YonywdiVWM9rTYATD7OJKX9ykZcRp7SfyUM0jD0YEBAP1zx1iLRaw+w6Lokgku5TiKrrXk4qta0Q1NiwbU19gpOl0xMnp0vRNhJNCtC7dgH5TzsjDGgy8Ttm5GqRp4UCoEDJdPfwNo0gVXDvke9jT32R1ub0AAJG5NJYIhHXgjs6IUu/TcWYGdY2KEl9A1JMhKDc61vtE+11YfK7gd1+1+Cus/5E761mSXhk6LF5P+ztdj/YdST/xKLsqOLzOoJCeY2u2gkLUzz165j07YIE5ZaGLs07NYFmNZWxg2Fcc1XCOSMhzynr7LjNyfMUAj1GQgfx7U90ZvShhXU1VytD6c4hlczFTjQMC9o1dfbmwQ7z9P9k8U0GJy9Z29n1tGV6Id1yh7fE7NN46C5aSRNykU91EvYDTpbtPUjumgbdfExbc9afEfmjGzBiDzHvTJttZWKmPhYS9czB9ZDBJZIjMoxu0Jh8VHtqG7T7GtyFns4PiQpdzLDwIM20OspbLImdA3pXeVyCR78jijleC9j51B+FJJ7sAMwXTTwXm/t4V8/wAAA4r6poAOrWjD5T1nhzPEfyG+CfpGTonLY1p+aGJclz2nrlCHHFULpmLgNbk7iBnpJEkyZwNoyBTFPGGC068XSgc8A/OdQgufEwt0pZBOs="
     - secure: "qPMRIo3jatIxVBZaIxQiXuPlO504Qot3SUCSblgkdWkgM2HyxCjnERSeL7DNAZ66HrCeQaJBUiohNaxhudMuPj3xF+zhs0l7GvBfCGuqHSWaGZnxRaKbxJvyamTAvMLC9379IAP+vWy+CIB81YSGSl1D4Y+JykhEIfhuUcIKC0QfXaoBdZjUeP6hDGYVvAhrPT/pcloq4bctq85Vi1rp6dsq24BD3kDVe7F0kPYAoxtz61K5lJbjhDB7zJfLVzk66hYEZHdDliujtmw/QzVCnT2Gy/ObAseZRnEtr3S5jmo2PRb07/uqZE2DFBYH4fZ3lXplt62B/oeoVNr3v3n+4joTS31GoVCgnxVc8urIK3rfC+50GtmOshU3Jb0MYIvDZV4uv2Qz5OaLZcmTqmGYSXSvoyoVyRf4n6Dq8Y9m2KX43yr7PqO7X5UOOGhnp0aEfqVmsrvYvDlLHuts/yYJ6Eqi+OuBK8JZG8O1c2ymPTNeRlXyAr7utduhwBCYOvTQ9uzwFqoQLOyIfU/ypvXupknlxWp5qThH5e8j3Er9gqnVcCqZt2JdTfEyB8d77Nccn3dyfN7gxCTfK3Ar9qw206RWBEcdjU7dz78Isnp9ifHXg/YhlxkBcS43oVT+A8EqZWzXTELgcuvwNbLa91mFfYA5kv392VIN//Xd5h5AOEc="
+    # swisscom user/pw/org
+    - secure: "Ix9vzmHJbnBKqh3Keux7nv8Pf7Irt+poiLRNiYcf4P9m+InhaxmLgzNqSqTP4rcCHuxtW2V1HBv5s08uQ7nCrUrQq1FVm/BQnyORKL342Y3srVUJ/38ZbWy9EHiRBuGwsYe5lGPOrJSSNOIz4p53x+GocyfNlNU1kmDjB4PGZZnLEvbj7wEf3FoqJf3Q3q6mrEaGINIdNjvHO+E7EckUDus0pose/dYomhXfXUGRXC3nxE9lygDOL3EWElTrMp9qni/HxkVZf8D4aZTwo2UzZ7z587GZc6qnbLIf5vvo7UIPZgSWI0z7qxhkkpWSuQeVRdNTBlnKELVE5Hlz0/RUh2mmN2NAG7S+UFNL6vdVvS/K3D+HLnlzgia0/u2L8h0VL6S5muCRJ8Mrc4YHsjJLXdCXEIEDbpi2uixrRJ1lL3uvzaSorQ4eMVg6966T8CI87V30XyGsjCjweOd68mLQtKmzEF8G/QB56Q4w4gdeUq+tvkzn94LsWY2fn8VIEzyXjhkMVyl1E5X9olCuz8mqaQWXEeysHBsdLIYQDhNkllOMPswpWRRE6OWgKzjqzjuHdVKK3ygcy9NCsQeOiqtoTgTQy5dY21Z/XXg4Ha1kK+L5YN8P9QA8NpBaPwnUC4xTVjI8XUZNGb7LsVvydBpVAaz5KPpWbVCIzVWM/77eNmI="
+    - secure: "GTD2tLYQa+jSg+wtFT7s78ZDov2QyH/noTwSqzLdZ0t0j/uLxQetS/q9+UXZ0s+oPnfSCcEfBPW41c+nqR69AegttB5VG/JoQpzU9pPwqwJ5ah16OuN0rwzrjT+7w1yRKh419Gqpe16xMC8MZssGofPL81tmPj0cVaEMLyF1sb0JnR/YHNRt47lt0a4ysKbySQ3vDqj7oAlTuBZ5LUAdo5JCe3dH/XHuuEhvXzVw1HiCx60Vxg9dmX6QsG72qSaAyucTZDTuAsFDZPjR0MNjm+24R27FM6rxIQvic1aSAst8QZGb4VZR0BJpcxZkPM8rSfFIHuHho9Ip1RH5mWo7XXfWNLIlfGrIAVcM3GOW+3CuVIlfqvovlWmDQja2jR1oXtxsZHnIpfar0J8RWiJ25IKM0OFvQiBrSbhHMT3VOzHhEsPXvxpb3Y+TuNkhAKXW+AcdnB0v1T6sJ0dMALFD3r/sgPzIMpQHyTZgZ0E3K9dDQl0FNDxRsEAy7Yqq36gxAb89RdjOK8eGBqpcfLQOjrsmXCNXRLnSHgTTD/245MJ0crB339z45UQQpkKoQdvuaH1MFUt4t7KmDrT44drQ6D8kumetPkSrkLd1O5bYEwkLmkoi8CzTbERuWmoP7EhPySfE9XbQ4bKBFEZXG666pWmzFTJcX6FRilyYFcv5xaY="
+    - secure: "n47Q0u+jXlc9FpfbO4GUwAo5IgoBQlJnb1KE0NaXpU/9unnRkOfVJN4Jpvs2B72cIZ57LB1POSoVYHMHjiLTP1buAlJroOI0STd5feQcE+vUZh3gMUnzU/r6BowxeD+qS1qXO/8BDaNCYCkPY+f1mM//p5PykOAojI9lrliuyl7jOJILWqi0juz3KLAvp/XPRwNYcgM9O4DczdqCVPrlUlHvXkP7c/+cRiENl8VfTrPHK3zxDd1n2ktp3IO6B544Ha7I3WB2zmNvEgpyo4b1dQ/sjnFeRYx8RDOM/aHCjb4BKy4HCEYF1r0+DaPWvf0AWd2mztE+7cd6HRO0RTwPWrlY0hRQOjC53DT5HEb+bvDP3ZOr4pWbMmHs0ksbAK2wdKgDr94FsporKdu0/LoOQ5XpOuf82i5lljQttvVxlIm+KaKsXTF/C2u+Yofa3Sjf7+zkMIZWdSXXgtu+CI3et3h1K53rqAXlRLzuV696N26ohmMlR7Ncx3TUUyWGZmpOezxkZ9KmvS2YsuLWaIWzov5fog14gDJjN6IwETEc8hUFdFnqTLW0BcJ4E1pzMavKS77aflU0ddRtp0D/YBtHwmx+Ie4exvRwn2S7rn7cZNuM8jn2yyxqBmZLu6Ibmygru5ierZR5uvnlOEQCzvPZHcMYKIvBt+SyLus46zPYM5g="
 
 script: go test -v ./...
 
-## ibm
+## swisscom
 after_success:
     - "wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-cli_amd64.deb -qO temp.deb && sudo dpkg -i temp.deb"
     - "rm temp.deb"
-    - "cf api https://api.eu-gb.bluemix.net"
-    - "cf login --u $BM_USERNAME --p $BM_PASSWORD --o $BM_ORGANIZATION --s dev"
+    - "cf api https://api.lyra-836.appcloud.swisscom.com"
+    - "cf login --u $APC_USERNAME --p $APC_PASSWORD --o $APC_ORGANIZATION --s PROD"
     - "cf push"
     - "cf logout"
+
+## ibm
+# after_success:
+#     - "wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-cli_amd64.deb -qO temp.deb && sudo dpkg -i temp.deb"
+#     - "rm temp.deb"
+#     - "cf api https://api.eu-gb.bluemix.net"
+#     - "cf login --u $BM_USERNAME --p $BM_PASSWORD --o $BM_ORGANIZATION --s dev"
+#     - "cf push"
+#     - "cf logout"
 
 ## pivotal
 # after_success:
