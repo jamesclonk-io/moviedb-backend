@@ -12,7 +12,7 @@ after_success:
     - "chmod +x cf"
     - "rm cf-cli.tgz"
     - "./cf api https://api.lyra-836.appcloud.swisscom.com"
-    - "./cf login --u $APC_USERNAME --p $APC_PASSWORD --o $APC_ORGANIZATION --s PROD"
+    - "./cf login -u $APC_USERNAME -p $APC_PASSWORD -o $APC_ORGANIZATION -s PROD"
     - "./cf push"
     - "./cf logout"
 
