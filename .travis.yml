@@ -3,21 +3,11 @@ language: go
 go:
   - "1.10"
 
-env:
-  global:
-    # pivotal user/pw
-    - secure: "jt2nSMG1JGbAW+YgA19Th5Y4zGhvDbbTCFZIuLArXy37W95PI4H/ckTEk9imSVbnx/mapdwFdzQb0kQVAdsVj75MaqGAxDYupEvDJjEjNJURp944rjoYGlLVbIgPU7EJzf1s3/hBtAcyasDQrCLWHCVKtSBwNQxDMJPLH7wUkOTwKg/wk56e9Fq/1UjaEu4wrzJlTruezHBMJ9/vI1duFzD0NloFXyPFjZ8HKr72a4lGvFi8f2FQYYbCGFFweESxXz41cbBxTkcCNJFc4htoSS4I14tdMsLxOE5sM5rfxhV0YSNeioIQ1hISHA4afe4JkGasOc6dpr+Gtso9QNWvV9EyOTnkkOcHBDlS1Zh0ZpzBB2VAXy8ca//Za/meMIDLgIEVohvzx5Eux3clpSwFq28gIhnBjBYcQ2c6nCEnmxPHvpgjEf8adA46zbaN/Zou1BwiKIAcMmGxitGAbMgRJd0dRy0YDLdqUTR8z/Fj8DxZqw+una1y3TGobtek3UOM8sfocXnTl5qDc47Rp46qm9tgep8w31c9R7vqZQQAT1oM4/T435k0hC8kCbIM1MS+LvWup8031n19hIIJQG1z39Np9CfgZCJ0bPKCGhWmS/QYddnybhgsSjVoQFyF/RsCM8wNYO1+xC25kE6JXeP11Y5Uoh4L+P48bzDbQyXfuho="
-    - secure: "XZ1wD8TaiRCNJcfMhmHMopOyIFm5jdSJDbbc1ZUtSwkzMWs1n8QZpTn5E7faUO3lY2W+IPiedag8nH26R0o+9pWDhafVt1CU0C2mMK23e/uCYHbwkT8VtW/rnKa3imdRBkEkZIehcC7bm8/+cDqwxbffIv9hmV0EIu3BkD9awENYNNlcEqq2vuKrfq6tto4iX1ipsXD4zRjaEFwZ/aFM1jQsKsYg4mD+ucuE24kg2oem2uXdYy+IRvRdOmpjZx2eNu2fG/eElv7/06KJ3TLsMTBbhHv6fkLZuN0wczYdUbUpMGystrP5xkt+h8yptf7ZdRV7HgrJ5BXAGLox6HPVWm+3iF6dLz13fCa8RK3gP393OvYkf5gqK+LOEoc0tshKzkPiv77DuU3iIVBLKi92FsVzuKIYWfesy8DgR+lFOLpBYNpZGVyVKT/9OPZOO57dneqqEiI+trEBTtDHjA0vtN+8O3eRDZKT0JrscxTgtrik8ain0HWaU60fMGKcp2XYcHtlZXTnZshKnzrz+zf7JwUx5eDP6fPYvUCoZ/nWMKwtqu/ksrag11Ft2xff2dFwHjVfyRnA2Cryf+5vb7jZtF4jT0JHfkomOC5DsWWrBNMnyl1WHJ8nhAzyfaxv3MKlYEfD3tXctXEJp5w+2yc/qaDO9BXL7r6s5Xru5yi3vuk="
-    # swisscom user/pw/org
-    - secure: "Ix9vzmHJbnBKqh3Keux7nv8Pf7Irt+poiLRNiYcf4P9m+InhaxmLgzNqSqTP4rcCHuxtW2V1HBv5s08uQ7nCrUrQq1FVm/BQnyORKL342Y3srVUJ/38ZbWy9EHiRBuGwsYe5lGPOrJSSNOIz4p53x+GocyfNlNU1kmDjB4PGZZnLEvbj7wEf3FoqJf3Q3q6mrEaGINIdNjvHO+E7EckUDus0pose/dYomhXfXUGRXC3nxE9lygDOL3EWElTrMp9qni/HxkVZf8D4aZTwo2UzZ7z587GZc6qnbLIf5vvo7UIPZgSWI0z7qxhkkpWSuQeVRdNTBlnKELVE5Hlz0/RUh2mmN2NAG7S+UFNL6vdVvS/K3D+HLnlzgia0/u2L8h0VL6S5muCRJ8Mrc4YHsjJLXdCXEIEDbpi2uixrRJ1lL3uvzaSorQ4eMVg6966T8CI87V30XyGsjCjweOd68mLQtKmzEF8G/QB56Q4w4gdeUq+tvkzn94LsWY2fn8VIEzyXjhkMVyl1E5X9olCuz8mqaQWXEeysHBsdLIYQDhNkllOMPswpWRRE6OWgKzjqzjuHdVKK3ygcy9NCsQeOiqtoTgTQy5dY21Z/XXg4Ha1kK+L5YN8P9QA8NpBaPwnUC4xTVjI8XUZNGb7LsVvydBpVAaz5KPpWbVCIzVWM/77eNmI="
-    - secure: "GTD2tLYQa+jSg+wtFT7s78ZDov2QyH/noTwSqzLdZ0t0j/uLxQetS/q9+UXZ0s+oPnfSCcEfBPW41c+nqR69AegttB5VG/JoQpzU9pPwqwJ5ah16OuN0rwzrjT+7w1yRKh419Gqpe16xMC8MZssGofPL81tmPj0cVaEMLyF1sb0JnR/YHNRt47lt0a4ysKbySQ3vDqj7oAlTuBZ5LUAdo5JCe3dH/XHuuEhvXzVw1HiCx60Vxg9dmX6QsG72qSaAyucTZDTuAsFDZPjR0MNjm+24R27FM6rxIQvic1aSAst8QZGb4VZR0BJpcxZkPM8rSfFIHuHho9Ip1RH5mWo7XXfWNLIlfGrIAVcM3GOW+3CuVIlfqvovlWmDQja2jR1oXtxsZHnIpfar0J8RWiJ25IKM0OFvQiBrSbhHMT3VOzHhEsPXvxpb3Y+TuNkhAKXW+AcdnB0v1T6sJ0dMALFD3r/sgPzIMpQHyTZgZ0E3K9dDQl0FNDxRsEAy7Yqq36gxAb89RdjOK8eGBqpcfLQOjrsmXCNXRLnSHgTTD/245MJ0crB339z45UQQpkKoQdvuaH1MFUt4t7KmDrT44drQ6D8kumetPkSrkLd1O5bYEwkLmkoi8CzTbERuWmoP7EhPySfE9XbQ4bKBFEZXG666pWmzFTJcX6FRilyYFcv5xaY="
-    - secure: "n47Q0u+jXlc9FpfbO4GUwAo5IgoBQlJnb1KE0NaXpU/9unnRkOfVJN4Jpvs2B72cIZ57LB1POSoVYHMHjiLTP1buAlJroOI0STd5feQcE+vUZh3gMUnzU/r6BowxeD+qS1qXO/8BDaNCYCkPY+f1mM//p5PykOAojI9lrliuyl7jOJILWqi0juz3KLAvp/XPRwNYcgM9O4DczdqCVPrlUlHvXkP7c/+cRiENl8VfTrPHK3zxDd1n2ktp3IO6B544Ha7I3WB2zmNvEgpyo4b1dQ/sjnFeRYx8RDOM/aHCjb4BKy4HCEYF1r0+DaPWvf0AWd2mztE+7cd6HRO0RTwPWrlY0hRQOjC53DT5HEb+bvDP3ZOr4pWbMmHs0ksbAK2wdKgDr94FsporKdu0/LoOQ5XpOuf82i5lljQttvVxlIm+KaKsXTF/C2u+Yofa3Sjf7+zkMIZWdSXXgtu+CI3et3h1K53rqAXlRLzuV696N26ohmMlR7Ncx3TUUyWGZmpOezxkZ9KmvS2YsuLWaIWzov5fog14gDJjN6IwETEc8hUFdFnqTLW0BcJ4E1pzMavKS77aflU0ddRtp0D/YBtHwmx+Ie4exvRwn2S7rn7cZNuM8jn2yyxqBmZLu6Ibmygru5ierZR5uvnlOEQCzvPZHcMYKIvBt+SyLus46zPYM5g="
-
 script: go test -v ./...
 
 ## swisscom
 after_success:
-    - "wget 'https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.21.0&source=github-rel' -qO cf-cli.tgz"
+    - "wget 'https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.32.0&source=github-rel' -qO cf-cli.tgz"
     - "tar -xvzf cf-cli.tgz"
     - "chmod +x cf"
     - "rm cf-cli.tgz"
@@ -25,17 +15,6 @@ after_success:
     - "./cf login --u $APC_USERNAME --p $APC_PASSWORD --o $APC_ORGANIZATION --s PROD"
     - "./cf push"
     - "./cf logout"
-
-## pivotal
-# after_success:
-#     - "wget 'https://cli.run.pivotal.io/stable?release=linux64-binary&version=6.21.0&source=github-rel' -qO cf-cli.tgz"
-#     - "tar -xvzf cf-cli.tgz"
-#     - "chmod +x cf"
-#     - "rm cf-cli.tgz"
-#     - "./cf api https://api.run.pivotal.io"
-#     - "./cf login --u $CF_USERNAME --p $CF_PASSWORD --o jamesclonk.io --s development"
-#     - "./cf push"
-#     - "./cf logout"
 
 notifications:
   email:
