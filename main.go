@@ -48,6 +48,7 @@ func setup() *negroni.Negroni {
 	backend.NewRoute("/directors", getDirectors)
 	backend.NewRoute("/statistics", getStatistics)
 
+	backend.NewRoute("/", index)
 	backend.NewRoute("/500", createError)
 
 	n := negroni.Sbagliato()
@@ -144,6 +145,12 @@ func getData(data interface{}, err error) *web.Page {
 	}
 	return &web.Page{
 		Content: data,
+	}
+}
+
+func index(w http.ResponseWriter, req *http.Request) *web.Page {
+	return &web.Page{
+		Content: `{}`,
 	}
 }
 
